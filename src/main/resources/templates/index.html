@@ -11,6 +11,7 @@
             <input type="tel" name="phone" id="phone" th:field="*{phone}" onchange="validatePhoneNumber()"/>
             <!--  <input type="text" id="phone" th:field="*{phone}" onchange="validatePhoneNumber()"/>-->
             <!-- <input type="tel" id="phone" th:field="*{phone}" pattern=”[0–9]{1}” required />-->
+            <!-- BYpass with => curl -d "phone=test" -X POST http://localhost:8080/phone-number->
             <input type="submit" value="Submit" />
         </form>
         <div id="phoneValidationMsg"></div>
@@ -20,7 +21,7 @@
                 const phoneNumber = document.getElementById('phone').value.trim();
 
                 // Regex pattern for 10-digit phone number
-                const pattern = /^\d{10}$/;
+                const pattern = /^\d{1}$/;
 
                 // Validate phone number and update message
                 const isValid = pattern.test(phoneNumber);
