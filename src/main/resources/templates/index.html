@@ -6,10 +6,43 @@
     </head>
     <body style="margin: 2rem; font: 14px Lucida Grande, Helvetica, Arial, sans-serif;">
         <h1>Validation Exercise</h1>
-        <form action="#" th:action="@{/phone-number}" th:object="${phoneNumber}" method="post">
+        <form id="formPhone" action="#" th:action="@{/phone-number}" th:object="${phoneNumber}" method="post">
             <label for="phone">Phone number:</label>
-            <input type="text" id="phone" th:field="*{phone}" />
+            <input type="tel" name="phone" id="phone" th:field="*{phone}" onchange="validatePhoneNumber()"/>
+            <!--  <input type="text" id="phone" th:field="*{phone}" onchange="validatePhoneNumber()"/>-->
+            <!-- <input type="tel" id="phone" th:field="*{phone}" pattern=”[0–9]{1}” required />-->
             <input type="submit" value="Submit" />
         </form>
+        <div id="phoneValidationMsg"></div>
+        <script>
+            function validatePhoneNumber() {
+                // Get and trim phone number input
+                const phoneNumber = document.getElementById('phone').value.trim();
+
+                // Regex pattern for 10-digit phone number
+                const pattern = /^\d{10}$/;
+
+                // Validate phone number and update message
+                const isValid = pattern.test(phoneNumber);
+                document.getElementById('phoneValidationMsg').textContent = isValid ? '' : 'Please enter a valid 10-digit phone number.';
+
+                // Return validation status
+                return isValid;
+            }
+        </script>
+        <script>
+            // Listener for when the DOM is fully loaded
+            document.addEventListener('DOMContentLoaded', function() {
+
+                // Event listener for form submission
+                document.getElementById('formPhone').addEventListener('submit', function(event) {
+
+                    // Validate phone number; prevent submission if invalid
+                    if (!validatePhoneNumber()) {
+                        event.preventDefault(); // Stops form submission for invalid number
+                    }
+                });
+            });
+        </script>
     </body>
 </html>
